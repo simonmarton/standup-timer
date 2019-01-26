@@ -16,7 +16,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 h3 {
   font-size: 25vw;
   font-weight: normal;

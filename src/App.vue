@@ -17,7 +17,7 @@ const ONE_SECOND = 1000;
 export default {
   name: 'app',
   data: () => ({
-    seconds: 60
+    seconds: 60 * 5
   }),
   methods: {
     ended: function() {
