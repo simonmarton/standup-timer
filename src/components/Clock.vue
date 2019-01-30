@@ -1,5 +1,5 @@
 <template>
-  <h3>{{ time }}</h3>
+  <h3 :class="classes">{{ time }}</h3>
 </template>
 
 <script>
@@ -11,7 +11,8 @@ export default {
       const seconds = `${this.totalSeconds - minutes * 60}`.padStart(2, '0');
 
       return `${minutes}:${seconds}`;
-    }
+    },
+    classes: ({ totalSeconds }) => totalSeconds <= 2 && 'done'
   }
 };
 </script>
@@ -20,7 +21,12 @@ export default {
 h3 {
   font-size: 25vw;
   font-weight: normal;
-  color: #ff2158;
+  color: var(--primary);
+  transition: color 2s;
+
+  &.done {
+    color: var(--warning);
+  }
 }
 </style>
 

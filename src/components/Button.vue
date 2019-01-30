@@ -1,32 +1,43 @@
 <template>
-  <button @click="click" :class="classes">{{label}}</button>
+  <button @click="handleClick" :class="classes">{{label}}</button>
 </template>
 
 <script>
 export default {
-  props: { label: String, active: Boolean, click: Function },
+  props: { value: Number, active: Boolean, onClick: Function, label: String },
   computed: {
     classes: ({ active }) => active && 'active'
+    // label: ({ value }) => `${value / 60} min`
   },
   methods: {
-    click: vm => {
-      console.log(vm);
+    handleClick: function({ value }) {
+      this.$emit('onClick', this.value);
     }
   }
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 button {
-  /* padding: 1rem 2rem; */
-  height: 2rem;
-  width: 3rem;
-  margin: 0.3rem;
   box-sizing: border-box;
-}
+  width: 5rem;
+  height: 2rem;
+  margin: 0.3rem;
 
-button.active {
-  border-bottom-width: 5px;
+  background: none;
+  border-radius: 0.5rem;
+  color: var(--light);
+  border: 1px solid var(--light);
+  outline: none;
+
+  cursor: pointer;
+
+  &.active,
+  &:hover {
+    // border-bottom-width: 5px;
+    color: var(--primary);
+    border-color: var(--primary);
+  }
 }
 </style>
 

@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <Clock :totalSeconds="seconds"/>
+    <Clock :totalSeconds="value"/>
     <div class="buttons">
-      <Button @click="reset" active label="1m"/>
-      <Button label="4m"/>
+      <Button @onClick="reset" :active="isActive(5)" :value="5" label="5 sec"/>
+      <Button @onClick="reset" :active="isActive(60)" :value="60" label="1 min"/>
+      <Button @onClick="reset" :active="isActive(300)" :value="300" label="5 min"/>
+      <Button @onClick="reset" :active="isActive(900)" :value="900" label="15 min"/>
     </div>
   </div>
 </template>
@@ -17,20 +19,29 @@ const ONE_SECOND = 1000;
 export default {
   name: 'app',
   data: () => ({
-    seconds: 60 * 5
+    value: null,
+    originalValue: 5 // TODO: read from localStorage
   }),
   methods: {
     ended: function() {
       clearInterval(this.counter);
     },
-    reset: () => {
-      console.log('asdasd');
+    reset: function(value) {
+      this.value = value;
+      this.originalValue = value;
+    },
+    isActive: function(value) {
+      // console.log('isActive', value, this.originalValue, this.value);
+
+      return value === this.originalValue;
     }
   },
   mounted: function() {
+    this.$data.value = this.$data.originalValue;
+
     this.counter = setInterval(() => {
-      this.$data.seconds--;
-      if (this.$data.seconds === 0) {
+      this.$data.value--;
+      if (this.$data.value === 0) {
         this.ended();
       }
     }, ONE_SECOND);
@@ -45,13 +56,18 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
 
+:root {
+  --primary: #683d87;
+  --light: #acacac;
+  --warning: #ff2158;
+}
+
 * {
   padding: 0;
   margin: 0;
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-family: 'Roboto Mono', monospace;
 
   font-weight: 200;
