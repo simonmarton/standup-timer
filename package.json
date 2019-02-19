@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit:watch": "npm run test:unit --watch"
+    "test:unit:watch": "npm run test:unit --watch",
+    "deploy": "npm run build && git add -f dist/ && git commit -snm 'deploy' && git push origin `git subtree split --prefix dist master`:gh-pages --force && git reset --soft HEAD^ && git reset"
   },
   "dependencies": {
     "vue": "^2.5.21"
