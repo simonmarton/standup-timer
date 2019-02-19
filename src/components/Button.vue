@@ -20,7 +20,8 @@ export default {
 <style lang="scss" scoped>
 button {
   box-sizing: border-box;
-  width: 5rem;
+  width: 7rem;
+  width: 30%;
   height: 2rem;
   margin: 0.3rem;
 

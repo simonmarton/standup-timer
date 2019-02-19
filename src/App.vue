@@ -2,9 +2,9 @@
   <div id="app">
     <Clock :totalSeconds="value"/>
     <div class="buttons">
-      <Button @onClick="reset" :active="isActive(5)" :value="5" label="5 sec"/>
+      <!-- <Button @onClick="reset" :active="isActive(5)" :value="5" label="5 sec"/> -->
       <Button @onClick="reset" :active="isActive(60)" :value="60" label="1 min"/>
-      <Button @onClick="reset" :active="isActive(300)" :value="300" label="5 min"/>
+      <Button @onClick="reset" :active="isActive(240)" :value="240" label="4 min"/>
       <Button @onClick="reset" :active="isActive(900)" :value="900" label="15 min"/>
     </div>
   </div>
@@ -13,22 +13,33 @@
 <script>
 import Clock from './components/Clock.vue';
 import Button from './components/Button.vue';
+import sound from './assets/timer-ring.mp3';
 
 const ONE_SECOND = 1000;
 
 export default {
   name: 'app',
   data: () => ({
+    audio: null,
     value: null,
-    originalValue: 5 // TODO: read from localStorage
+    originalValue: 60 // TODO: read from localStorage
   }),
   methods: {
     ended: function() {
-      clearInterval(this.counter);
+      // clearInterval(this.counter);
+      this.audio.play();
     },
     reset: function(value) {
       this.value = value;
       this.originalValue = value;
+
+      clearInterval(this.counter);
+      this.counter = setInterval(() => {
+        this.$data.value--;
+        if (this.$data.value === 0) {
+          this.ended();
+        }
+      }, ONE_SECOND);
     },
     isActive: function(value) {
       // console.log('isActive', value, this.originalValue, this.value);
@@ -37,14 +48,12 @@ export default {
     }
   },
   mounted: function() {
-    this.$data.value = this.$data.originalValue;
+    this.$data.audio = new Audio(sound);
+    //
+    // console.log(audio);
+    // this.$data.value = this.$data.originalValue;
 
-    this.counter = setInterval(() => {
-      this.$data.value--;
-      if (this.$data.value === 0) {
-        this.ended();
-      }
-    }, ONE_SECOND);
+    this.reset(this.$data.originalValue);
   },
   components: {
     Clock,
