@@ -1,5 +1,7 @@
 <template>
-  <h3 :class="classes">{{ time }}</h3>
+  <div class="container">
+    <h3 :class="classes">{{ time }}</h3>
+  </div>
 </template>
 
 <script>
@@ -23,16 +25,21 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+}
+
 h3 {
-  font-size: 25vw;
   font-size: 30vw;
   font-weight: normal;
   color: var(--primary);
-  transition: color 2s;
   transition: color 1s;
 
-  line-height: 1;
+  pointer-events: none;
 
   &.done,
   &.overtime {

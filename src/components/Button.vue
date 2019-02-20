@@ -1,5 +1,5 @@
 <template>
-  <button @click="handleClick" :class="classes">{{label}}</button>
+  <div @click="handleClick" :class="classes">{{label}}</div>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
     // label: ({ value }) => `${value / 60} min`
   },
   methods: {
-    handleClick: function({ value }) {
+    handleClick: function() {
       this.$emit('onClick', this.value);
     }
   }
@@ -18,18 +18,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button {
+div {
   box-sizing: border-box;
-  width: 7rem;
   width: 30%;
   height: 2rem;
-  margin: 0.3rem;
+  margin: 0.1rem 0.3rem;
+  padding: 0.3rem;
 
-  background: none;
   border-radius: 0.5rem;
   color: var(--light);
   border: 1px solid var(--light);
   outline: none;
+  font-family: sans-serif;
 
   cursor: pointer;
 
