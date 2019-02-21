@@ -40,6 +40,7 @@ h3 {
   transition: color 1s;
 
   pointer-events: none;
+  user-select: none;
 
   &.done,
   &.overtime {

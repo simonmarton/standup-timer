@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="-webkit-app-region: drag">
     <Clock :totalSeconds="value"/>
     <div :class="buttonGroupClassnames">
       <!-- <Button @onClick="reset" :active="isActive(5)" :value="5" label="5 sec"/> -->
@@ -18,7 +18,7 @@ import Button from './components/Button.vue';
 import sound from './assets/timer-ring.mp3';
 
 const ONE_SECOND = 1000;
-const HIDE_UI_DEPLAY = ONE_SECOND * 3;
+const HIDE_UI_DEPLAY = ONE_SECOND * 2;
 
 export default {
   name: 'app',
