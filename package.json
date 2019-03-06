@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm run serve",
+    "start": "yarn serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit:watch": "npm run test:unit --watch",
-    "deploy": "npm run build && git add -f dist/ && git commit -snm \"deploy `date '+%Y-%m-%d %H:%M:%S'`\" && git push origin `git subtree split --prefix dist master`:gh-pages --force && git reset --soft HEAD^ && git reset"
+    "test:unit:watch": "yarn test:unit --watch",
+    "deploy": "yarn build && git add -f dist/ && git commit -snm \"deploy `date '+%Y-%m-%d %H:%M:%S'`\" && git push origin `git subtree split --prefix dist master`:gh-pages --force && git reset --soft HEAD^ && git reset"
   },
   "dependencies": {
     "classnames": "^2.2.6",
