@@ -7,7 +7,6 @@ export default {
   props: { value: Number, active: Boolean, onClick: Function, label: String },
   computed: {
     classes: ({ active }) => active && 'active'
-    // label: ({ value }) => `${value / 60} min`
   },
   methods: {
     handleClick: function() {

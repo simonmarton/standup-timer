@@ -2,10 +2,9 @@
   <div id="app" style="-webkit-app-region: drag">
     <Clock :totalSeconds="value"/>
     <div :class="buttonGroupClassnames">
-      <!-- <Button @onClick="reset" :active="isActive(5)" :value="5" label="5 sec"/> -->
       <Button @onClick="reset" :active="isActive(60)" :value="60" label="1 min"/>
-      <Button @onClick="reset" :active="isActive(240)" :value="240" label="4 min"/>
-      <Button @onClick="reset" :active="isActive(900)" :value="900" label="15 min"/>
+      <Button @onClick="reset" :active="isActive(300)" :value="300" label="5 min"/>
+      <Button @onClick="reset" :active="isActive(600)" :value="600" label="10 min"/>
     </div>
   </div>
 </template>
@@ -49,8 +48,6 @@ export default {
       }, ONE_SECOND);
     },
     isActive: function(value) {
-      // console.log('isActive', value, this.originalValue, this.value);
-
       return value === this.originalValue;
     },
     update: function() {
@@ -83,7 +80,8 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
 
 :root {
-  --primary: #683d87;
+  --primary: #492f5c;
+  --primary: #760fc3;
   --light: #acacac;
   --warning: #ff2158;
 }
@@ -91,6 +89,11 @@ export default {
 * {
   padding: 0;
   margin: 0;
+  user-select: none;
+}
+
+body {
+  overflow: hidden;
 }
 
 #app {
