@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:watch": "npm run test:unit --watch",
-    "deploy": "npm run build && git add -f dist/ && git commit -snm 'deploy' && git push origin `git subtree split --prefix dist master`:gh-pages --force && git reset --soft HEAD^ && git reset"
+    "deploy": "npm run build && git add -f dist/ && git commit -snm \"deploy `date '+%Y-%m-%d %H:%M:%S'`\" && git push origin `git subtree split --prefix dist master`:gh-pages --force && git reset --soft HEAD^ && git reset"
   },
   "dependencies": {
     "classnames": "^2.2.6",
