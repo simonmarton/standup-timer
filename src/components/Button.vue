@@ -3,10 +3,18 @@
 </template>
 
 <script>
+import cx from 'classnames';
+
 export default {
-  props: { value: Number, active: Boolean, onClick: Function, label: String },
+  props: {
+    value: Number,
+    active: Boolean,
+    onClick: Function,
+    label: String,
+    overtime: Boolean
+  },
   computed: {
-    classes: ({ active }) => active && 'active'
+    classes: ({ active, overtime }) => cx({ active, overtime })
   },
   methods: {
     handleClick: function() {
@@ -37,9 +45,14 @@ div {
 
   &.active,
   &:hover {
-    // border-bottom-width: 5px;
-    color: var(--primary);
-    border-color: var(--primary);
+    --color: var(--primary);
+
+    &.overtime {
+      --color: var(--warning);
+    }
+
+    color: var(--color);
+    border-color: var(--color);
   }
 }
 </style>

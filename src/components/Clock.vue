@@ -5,8 +5,10 @@
 </template>
 
 <script>
+import cx from 'classnames';
+
 export default {
-  props: { totalSeconds: Number },
+  props: { totalSeconds: Number, overtime: Boolean, big: Boolean },
   computed: {
     time: function() {
       const minutes = `${Math.floor(
@@ -19,8 +21,7 @@ export default {
 
       return `${minutes}:${seconds}`;
     },
-    // classes: ({ totalSeconds }) => totalSeconds <= 2 && 'done'
-    classes: ({ totalSeconds }) => totalSeconds <= 0 && 'overtime'
+    classes: ({ overtime, big }) => cx({ overtime, big })
   }
 };
 </script>
@@ -34,10 +35,10 @@ export default {
 }
 
 h3 {
-  font-size: 30vw;
+  font-size: 22vw;
   font-weight: normal;
   color: var(--primary);
-  transition: color 1s;
+  transition: all 0.25s;
 
   pointer-events: none;
   user-select: none;
@@ -45,6 +46,10 @@ h3 {
   &.done,
   &.overtime {
     color: var(--warning);
+  }
+
+  &.big {
+    font-size: 32vw;
   }
 }
 </style>

@@ -1,10 +1,29 @@
 <template>
   <div id="app" style="-webkit-app-region: drag">
-    <Clock :totalSeconds="value"/>
+    <Progress :value="progressValue" :compact="hideUI" :overtime="overtime"/>
+    <Clock :totalSeconds="value" :big="hideUI" :overtime="overtime"/>
     <div :class="buttonGroupClassnames">
-      <Button @onClick="reset" :active="isActive(60)" :value="60" label="1 min"/>
-      <Button @onClick="reset" :active="isActive(300)" :value="300" label="5 min"/>
-      <Button @onClick="reset" :active="isActive(600)" :value="600" label="10 min"/>
+      <Button
+        @onClick="reset"
+        :active="isActive(60)"
+        :value="60"
+        label="1 min"
+        :overtime="overtime"
+      />
+      <Button
+        @onClick="reset"
+        :active="isActive(300)"
+        :value="300"
+        label="5 min"
+        :overtime="overtime"
+      />
+      <Button
+        @onClick="reset"
+        :active="isActive(600)"
+        :value="600"
+        label="10 min"
+        :overtime="overtime"
+      />
     </div>
   </div>
 </template>
@@ -14,21 +33,31 @@ import cx from 'classnames';
 
 import Clock from './components/Clock.vue';
 import Button from './components/Button.vue';
+import Progress from './components/Progress.vue';
+
 import sound from './assets/timer-ring.mp3';
 
 const ONE_SECOND = 1000;
 const HIDE_UI_DEPLAY = ONE_SECOND * 2;
 
 export default {
+  components: {
+    Clock,
+    Button,
+    Progress
+  },
   name: 'app',
   data: () => ({
     audio: null,
     value: null,
     originalValue: 60, // TODO: read from localStorage
-    hideUI: false
+    hideUI: false,
+    progressValue: 0,
+    startedAt: 0
   }),
   computed: {
-    buttonGroupClassnames: ({ hideUI }) => cx('buttons', { hidden: hideUI })
+    buttonGroupClassnames: ({ hideUI }) => cx('buttons', { hidden: hideUI }),
+    overtime: ({ value }) => value <= 0
   },
   methods: {
     ended: function() {
@@ -38,6 +67,7 @@ export default {
     reset: function(value) {
       this.value = value;
       this.originalValue = value;
+      this.startedAt = Date.now();
 
       clearInterval(this.counter);
       this.counter = setInterval(() => {
@@ -51,8 +81,10 @@ export default {
       return value === this.originalValue;
     },
     update: function() {
-      this.$data.hideUI =
-        Date.now() - this.$data.lastMouseEvtTime > HIDE_UI_DEPLAY;
+      const now = Date.now();
+      this.$data.hideUI = now - this.$data.lastMouseEvtTime > HIDE_UI_DEPLAY;
+
+      this.progressValue = (now - this.startedAt) / this.originalValue / 10;
 
       requestAnimationFrame(this.update);
     }
@@ -68,10 +100,6 @@ export default {
     this.update();
 
     this.reset(this.$data.originalValue);
-  },
-  components: {
-    Clock,
-    Button
   }
 };
 </script>
@@ -117,7 +145,7 @@ body {
   height: 2.6rem;
   opacity: 1;
 
-  transition: 0.25s all;
+  transition: all 0.25s;
 
   &.hidden {
     height: 0;
