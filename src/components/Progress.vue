@@ -16,7 +16,8 @@ export default {
 
 <style lang="scss" scoped>
 .progress {
-  width: 50%;
+  // position: absolute;
+  width: 0;
   height: 0.4rem;
   background: var(--primary);
   transition: all 0.25s;

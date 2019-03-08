@@ -49,7 +49,7 @@ h3 {
   }
 
   &.big {
-    font-size: 32vw;
+    font-size: 30vw;
   }
 }
 </style>

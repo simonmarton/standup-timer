@@ -39,6 +39,7 @@ import sound from './assets/timer-ring.mp3';
 
 const ONE_SECOND = 1000;
 const HIDE_UI_DEPLAY = ONE_SECOND * 2;
+const ORIGINAL_VALUE_KEY = 'original-value';
 
 export default {
   components: {
@@ -50,10 +51,11 @@ export default {
   data: () => ({
     audio: null,
     value: null,
-    originalValue: 60, // TODO: read from localStorage
+    originalValue: parseInt(localStorage.getItem(ORIGINAL_VALUE_KEY), 10) || 60,
     hideUI: false,
     progressValue: 0,
-    startedAt: 0
+    startedAt: 0,
+    shouldUpdate: true
   }),
   computed: {
     buttonGroupClassnames: ({ hideUI }) => cx('buttons', { hidden: hideUI }),
@@ -61,12 +63,12 @@ export default {
   },
   methods: {
     ended: function() {
-      // clearInterval(this.counter);
       this.audio.play();
     },
     reset: function(value) {
       this.value = value;
       this.originalValue = value;
+      localStorage.setItem(ORIGINAL_VALUE_KEY, value);
       this.startedAt = Date.now();
 
       clearInterval(this.counter);
@@ -84,9 +86,12 @@ export default {
       const now = Date.now();
       this.$data.hideUI = now - this.$data.lastMouseEvtTime > HIDE_UI_DEPLAY;
 
-      this.progressValue = (now - this.startedAt) / this.originalValue / 10;
+      this.progressValue =
+        Math.round((now - this.startedAt) / this.originalValue) / 10;
 
-      requestAnimationFrame(this.update);
+      if (this.shouldUpdate) {
+        requestAnimationFrame(this.update);
+      }
     }
   },
   mounted: function() {
@@ -100,6 +105,9 @@ export default {
     this.update();
 
     this.reset(this.$data.originalValue);
+  },
+  beforeDestroy: function() {
+    this.shouldUpdate = false;
   }
 };
 </script>
